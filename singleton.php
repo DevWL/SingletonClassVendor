@@ -2,33 +2,52 @@
 namespace sin;
 
 
-
+/**
+ * @docs allows only one instance of a class
+ * @emaiple use it for database connection
+ * @config file
+ */
 class Singleton
 {
-
+    /**
+     *  holds an single instance of a class
+     *
+     *  @var boolean|object
+     */
     private static $instance = false;
 
+    /**
+     *  public constructor
+     *  init the class
+     * 
+     *  @return object
+     */
     public function __construct(){
-        echo "Class created";
-        print_r($this);
-    }
-
-    public static function getInstance(){
         if(self::$instance == false){
-            $class = __CLASS__;
-            echo "new<br />";
+            echo "new". PHP_EOL;
            ;
-            self::$instance = new Singleton;
+            self::$instance = $this;
             return  self::$instance;
         }
-        echo "old<br />";
+        return static::getInstance();
+    }
+
+    /**
+     *  private method
+     *  returns instance of a class
+     *
+     *  @return object
+     */
+    private static function getInstance(){
+        echo "old". PHP_EOL;
         return self::$instance;
     }
 
 }
 
-$ob1 = Singleton::getInstance();
-$ob2 = Singleton::getInstance();
-// $ob2 = new Singleton();
-// $ob3 = new Singleton();
+/**
+ *  @example use example
+ */
+$ob1 = new Singleton(); // new
+$ob2 = new Singleton(); // old
 
