@@ -1,14 +1,34 @@
 <?php
-namespace singleton;
+namespace sin;
+
+
 
 class Singleton
 {
-    private function __construct(){
 
+    private static $instance = false;
+
+    public function __construct(){
+        echo "Class created";
+        print_r($this);
     }
+
+    public static function getInstance(){
+        if(self::$instance == false){
+            $class = __CLASS__;
+            echo "new<br />";
+           ;
+            self::$instance = new Singleton;
+            return  self::$instance;
+        }
+        echo "old<br />";
+        return self::$instance;
+    }
+
 }
 
-echo "Singleton";
-
-
+$ob1 = Singleton::getInstance();
+$ob2 = Singleton::getInstance();
+// $ob2 = new Singleton();
+// $ob3 = new Singleton();
 
