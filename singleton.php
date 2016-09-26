@@ -8,7 +8,7 @@ class Singleton
 
     private static $instance = false;
 
-    public function __construct(){
+    private function __construct(){
         echo "Class created";
         print_r($this);
     }
