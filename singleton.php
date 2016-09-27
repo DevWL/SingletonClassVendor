@@ -3,8 +3,10 @@ namespace sin;
 
 
 /**
- * @dosc allows only one instance of a class
- * @example use it for database connection
+ * @dosc allows only one instance for each extending class
+ * @example use it for database connection, config setup...
+ * Be aware, singleton pattern is consider to be an antipatern and becaouse of it build it is hard to debug.
+ * In most cases you do not need to use singleton patern so make a longer though about it befor you use it.
  */
 class Singleton
 {
@@ -22,13 +24,11 @@ class Singleton
     public static function getInstance(){
         $class = get_called_class();
         if(!isset(self::$instance[$class]) || !self::$instance[$class] instanceof $class){
-            echo "new ". $class . PHP_EOL;
-            // $class = __CLASS__;
-            // self::$instance = new $class; // ??
-            self::$instance[$class] = new static(); // returns old in extended class
-            return  self::$instance; // this line can be skeeped but i left it for debug purpose only
+            self::$instance[$class] = new static(); // create and instance of child class which extends Singleton super class
+            echo "new ". $class . PHP_EOL; // remove this line after testing
+            return  self::$instance[$class]; // remove this line after testing
         }
-        echo "old ". $class . PHP_EOL;
+        echo "old ". $class . PHP_EOL; // remove this line after testing
         return static::$instance[$class];
     }
 
@@ -51,7 +51,8 @@ class Singleton
 }
 
 /**
- *  @docs database class by extending singleton class implements singleton pattern
+ * ----------------------------------------------USE EXAMPLE---------------------------------------------------
+ *  @docs example database class by extending singleton class implements singleton pattern
  */
 class Database extends Singleton
 {
@@ -59,12 +60,6 @@ class Database extends Singleton
 
     }
 }
-
-/**
- *  @example create new Database class which implements singleton pattern from Singleton class 
- */
-$bd1 = Database::getInstance(); // new
-$bd2 = Database::getInstance(); // old
 
 
 /**
@@ -78,10 +73,17 @@ class Config extends Singleton
 }
 
 /**
- *  @example create new Config class which implements singleton pattern from Singleton class 
+ *  @example create new Database
+ */
+$bd1 = Database::getInstance(); // new
+$bd2 = Database::getInstance(); // old
+
+/**
+ *  @example create new Config 
  */
 $bd1 = Config::getInstance(); // new
 $bd2 = Config::getInstance(); // old
+
 
 
 $bd3 = Config::getInstance(); // old
