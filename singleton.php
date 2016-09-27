@@ -1,5 +1,5 @@
 <?php
-namespace sin;
+namespace wl;
 
 
 /**
@@ -13,7 +13,7 @@ class Singleton
     /**
      *  holds an single instance of a class
      *
-     *  @var boolean|object
+     *  @var array of objects
      */
     protected static $instance = [];
 
