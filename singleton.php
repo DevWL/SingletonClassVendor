@@ -88,4 +88,4 @@ $bd3 = Config::getInstance(); // old
 $bd4 = Config::getInstance(); // new
 
 $bd5 = Config::getInstance(); // old
-$bd6 = Config::getInstance(); // new
+$bd6 = Config::getInstance(); // old
