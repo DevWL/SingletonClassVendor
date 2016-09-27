@@ -85,7 +85,7 @@ $bd2 = Config::getInstance(); // old
 
 
 $bd3 = Config::getInstance(); // old
-$bd4 = Config::getInstance(); // new
+$bd4 = Database::getInstance(); // old
 
-$bd5 = Config::getInstance(); // old
+$bd5 = Database::getInstance(); // old
 $bd6 = Config::getInstance(); // old
