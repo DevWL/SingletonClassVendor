@@ -3,9 +3,8 @@ namespace sin;
 
 
 /**
- * @docs allows only one instance of a class
- * @emaiple use it for database connection
- * @config file
+ * @dosc allows only one instance of a class
+ * @example use it for database connection
  */
 class Singleton
 {
@@ -14,40 +13,74 @@ class Singleton
      *
      *  @var boolean|object
      */
-    private static $instance = false;
+    protected static $instance = false;
 
     /**
-     *  public constructor
-     *  init the class
-     * 
-     *  @return object
-     */
-    public function __construct(){
-        if(self::$instance == false){
-            echo "new". PHP_EOL;
-           ;
-            self::$instance = $this;
-            return  self::$instance;
-        }
-        return static::getInstance();
-    }
-
-    /**
-     *  private method
-     *  returns instance of a class
+     *  protected method
+     *  returns instance of a class for each extended class
      *
      *  @return object
      */
-    private static function getInstance(){
-        echo "old". PHP_EOL;
-        return self::$instance;
+    public static function getInstance(){
+        $class = get_called_class();
+        if(!self::$instance instanceof $class){
+            echo "new ". $class . PHP_EOL;
+            // $class = __CLASS__;
+            // self::$instance = new $class; // ??
+            self::$instance = new static(); // returns old in extended class
+            return  self::$instance; // this line can be skeeped but i left it for debug purpose only
+        }
+        echo "old ". $class . PHP_EOL;
+        return static::$instance;
     }
+
+    /**
+     *  do not allow create new instance by new keyword
+     * 
+     */
+    protected function __construct(){}
+
+    /**
+     *  Do not clone the object
+     */
+    protected function __clone(){}
+
+    /**
+     *  Do not allow reserialization of this object
+     */
+    protected function __wakeup(){}
 
 }
 
 /**
- *  @example use example
+ *  @docs database class by extending singleton class implements singleton pattern
  */
-$ob1 = new Singleton(); // new
-$ob2 = new Singleton(); // old
+class Database extends Singleton
+{
+    public function __construct(){
 
+    }
+}
+
+/**
+ *  @example create new Database class which implements singleton pattern from Singleton class 
+ */
+$bd1 = Database::getInstance(); // new
+$bd2 = Database::getInstance(); // old
+
+
+/**
+ *  @docs Config class by extending singleton class implements singleton pattern
+ */
+class Config extends Singleton
+{
+    public function __construct(){
+
+    }
+}
+
+/**
+ *  @example create new Config class which implements singleton pattern from Singleton class 
+ */
+$bd1 = Config::getInstance(); // new
+$bd2 = Config::getInstance(); // old
