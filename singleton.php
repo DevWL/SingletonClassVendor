@@ -13,25 +13,23 @@ class Singleton
      *
      *  @var boolean|object
      */
-    protected static $instance = false;
+    protected static $instance = [];
 
     /**
-     *  protected method
-     *  returns instance of a class for each extended class
-     *
+     *  @desc provides a single slot to hold an instance interchanble between all child classes.
      *  @return object
      */
     public static function getInstance(){
         $class = get_called_class();
-        if(!self::$instance instanceof $class){
+        if(!isset(self::$instance[$class]) || !self::$instance[$class] instanceof $class){
             echo "new ". $class . PHP_EOL;
             // $class = __CLASS__;
             // self::$instance = new $class; // ??
-            self::$instance = new static(); // returns old in extended class
+            self::$instance[$class] = new static(); // returns old in extended class
             return  self::$instance; // this line can be skeeped but i left it for debug purpose only
         }
         echo "old ". $class . PHP_EOL;
-        return static::$instance;
+        return static::$instance[$class];
     }
 
     /**
@@ -84,3 +82,10 @@ class Config extends Singleton
  */
 $bd1 = Config::getInstance(); // new
 $bd2 = Config::getInstance(); // old
+
+
+$bd3 = Config::getInstance(); // old
+$bd4 = Config::getInstance(); // new
+
+$bd5 = Config::getInstance(); // old
+$bd6 = Config::getInstance(); // new
