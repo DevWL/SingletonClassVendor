@@ -3,12 +3,16 @@ namespace wl;
 
 
 /**
- * @dosc allows only one instance for each extending class
+ * @dosc allows only one instance for each extending class.
+ * it acts a litle bit as registry from the Singleton abstract class point of view
+ * but it provides a valid singleton behaviour for its children classes (extended)
  * @example use it for database connection, config setup...
- * Be aware, singleton pattern is consider to be an antipatern and becaouse of it build it is hard to debug.
- * In most cases you do not need to use singleton patern so make a longer though about it befor you use it.
+ * Be aware, the singleton pattern is consider to be an anti-pattern
+ * because it can be hard to debug.
+ * In most cases you do not need to use singleton pattern
+ * so take a longer moment to think about it before you use it.
  */
-class Singleton
+abstract class Singleton
 {
     /**
      *  holds an single instance of a class
@@ -33,9 +37,9 @@ class Singleton
     }
 
     /**
-     * Make constructor private, so nobody can call "new Class".
+     * Make constructor abstract to force protected implementation of the __constructor() method, so that nobody can call directly "new Class()".
      */
-    private function __construct() {}
+    abstract protected function __construct();
 
     /**
      * Make clone magic method private, so nobody can clone instance.
@@ -55,24 +59,33 @@ class Singleton
 }
 
 /**
- * ----------------------------------------------USE EXAMPLE---------------------------------------------------
- *  @docs example database class by extending singleton class implements singleton pattern
+ * ---------------------------------------------- USE EXAMPLE BELLOW---------------------------------------------------
+ */
+
+/**
+ *  @docs Config class by extending Singleton abstract class implements singleton pattern
+ *  __constructor must be set to protected for two reasons: 
+ *   1 to allow instansiation from parent class 
+ *   2 to prevent direct instanciation of object with "new" keword.
  */
 class Database extends Singleton
 {
     protected function __construct(){
-
+        echo "DDDDDDDDD". PHP_EOL; // remove this line after testing
     }
 }
 
 
 /**
- *  @docs Config class by extending singleton class implements singleton pattern
+ *  @docs Config class by extending Singleton abstract class implements singleton pattern
+ *  __constructor must be set to protected for two reasons: 
+ *   1 to allow instansiation from parent class 
+ *   2 to prevent direct instanciation of object with "new" keword.
  */
 class Config extends Singleton
 {
     protected function __construct(){
-
+        echo "CCCCCCCCCC" . PHP_EOL; // remove this line after testing
     }
 }
 
@@ -89,18 +102,22 @@ $bd3 = Config::getInstance(); // new
 $bd4 = Config::getInstance(); // old
 
 
-
+/**
+ *  @example more testing
+ */
 $bd5 = Config::getInstance(); // old
 $bd6 = Database::getInstance(); // old
 
 $bd7 = Database::getInstance(); // old
 $bd8 = Config::getInstance(); // old
 
-echo get_class($bd1);
-echo get_class($bd2);
-echo get_class($bd3);
-echo get_class($bd4);
-echo get_class($bd5);
-echo get_class($bd6);
-echo get_class($bd7);
-echo get_class($bd8);
+
+echo PHP_EOL. PHP_EOL;
+echo get_class($bd1)  . PHP_EOL;
+echo get_class($bd2)  . PHP_EOL;
+echo get_class($bd3)  . PHP_EOL;
+echo get_class($bd4)  . PHP_EOL;
+echo get_class($bd5)  . PHP_EOL;
+echo get_class($bd6)  . PHP_EOL;
+echo get_class($bd7)  . PHP_EOL;
+echo get_class($bd8)  . PHP_EOL;
