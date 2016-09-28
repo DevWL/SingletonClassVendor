@@ -22,7 +22,7 @@ class Singleton
      *  @return object
      */
     public static function getInstance(){
-        $class = get_called_class();
+        $class = get_called_class(); // or get_class(new static());
         if(!isset(self::$instance[$class]) || !self::$instance[$class] instanceof $class){
             self::$instance[$class] = new static(); // create and instance of child class which extends Singleton super class
             echo "new ". $class . PHP_EOL; // remove this line after testing
@@ -60,7 +60,7 @@ class Singleton
  */
 class Database extends Singleton
 {
-    public function __construct(){
+    protected function __construct(){
 
     }
 }
@@ -71,7 +71,7 @@ class Database extends Singleton
  */
 class Config extends Singleton
 {
-    public function __construct(){
+    protected function __construct(){
 
     }
 }
