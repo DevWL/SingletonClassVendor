@@ -33,20 +33,24 @@ class Singleton
     }
 
     /**
-     *  do not allow create new instance by new keyword
-     * 
+     * Make constructor private, so nobody can call "new Class".
      */
-    protected function __construct(){}
+    private function __construct() {}
 
     /**
-     *  Do not clone the object
+     * Make clone magic method private, so nobody can clone instance.
      */
-    protected function __clone(){}
+    private function __clone() {}
 
     /**
-     *  Do not allow reserialization of this object
+     * Make sleep magic method private, so nobody can serialize instance.
      */
-    protected function __wakeup(){}
+    private function __sleep() {}
+
+    /**
+     * Make wakeup magic method private, so nobody can unserialize instance.
+     */
+    private function __wakeup() {}
 
 }
 
@@ -81,13 +85,22 @@ $bd2 = Database::getInstance(); // old
 /**
  *  @example create new Config 
  */
-$bd1 = Config::getInstance(); // new
-$bd2 = Config::getInstance(); // old
+$bd3 = Config::getInstance(); // new
+$bd4 = Config::getInstance(); // old
 
 
 
-$bd3 = Config::getInstance(); // old
-$bd4 = Database::getInstance(); // old
+$bd5 = Config::getInstance(); // old
+$bd6 = Database::getInstance(); // old
 
-$bd5 = Database::getInstance(); // old
-$bd6 = Config::getInstance(); // old
+$bd7 = Database::getInstance(); // old
+$bd8 = Config::getInstance(); // old
+
+echo get_class($bd1);
+echo get_class($bd2);
+echo get_class($bd3);
+echo get_class($bd4);
+echo get_class($bd5);
+echo get_class($bd6);
+echo get_class($bd7);
+echo get_class($bd8);
