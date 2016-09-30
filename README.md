@@ -63,9 +63,9 @@ abstract class SingletonClassVendor
 
 }
 ```
-/**
- * EXAMPLE
- */
+
+EXAMPLE
+
 ```
 /**
  *  @example 1 - Database class by extending SingletonClassVendor abstract class becomes fully functional singleton
@@ -95,9 +95,9 @@ class Config extends SingletonClassVendor
 }
 
 ```
-/**
- *  TESTING
- */
+
+TESTING
+
 ```
 $bd1 = Database::getInstance(); // new
 $bd2 = Database::getInstance(); // old
